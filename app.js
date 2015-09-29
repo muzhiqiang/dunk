@@ -56,5 +56,13 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
+if(!module.parent){
+  var port = 3030;
+  var server = app.listen(port,function(){
+    console.log("------------------------------------");
+    console.log("管理后台");
+    console.log("Express server listening on port %s:%d in %s mode",server.address().address,port,app.settings.env);
+    console.log("------------------------------------")
+  });
+}
 module.exports = app;
