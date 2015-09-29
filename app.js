@@ -57,7 +57,7 @@ app.use(function(err, req, res, next) {
 });
 
 if(!module.parent){
-  var port = 3030;
+  var port = 3031;
   var server = app.listen(port,function(){
     console.log("------------------------------------");
     console.log("管理后台");
