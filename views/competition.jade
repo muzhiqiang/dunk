@@ -1,0 +1,176 @@
+doctype html
+html
+	head
+		title 金秋杯
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=no")
+		link(rel="stylesheet" href="/stylesheets/competition_main.css")
+		link(rel="stylesheet" href="/stylesheets/competition_comment.css")
+		link(rel="stylesheet" href="/stylesheets/competition_statistics.css")
+		script(src="/javascripts/jquery.min.js")
+		script(type="text/javascript").
+			var navbar = {
+				"oldId" : "",
+				"newId" : "",
+				"selector" : function(){
+					if(this.newId!=this.oldId){
+						$(".content").empty();
+						$("#"+this.oldId).removeClass("active");
+						$("#"+this.newId).addClass("active");
+						this.oldId = this.newId;
+					}
+				},
+				"changeId" : function(order){
+					this.newId = order;
+					this.selector();
+				}
+			};
+			var content = {
+				"oldId" : "",
+				"newId" : "",
+				"comment" : "",
+				"report" : "",
+				"statistics" : "",
+				"fill" : function(){
+					if(this.newId != this.oldId){
+						switch(this.newId){
+							case "comment":
+								this.getComment();
+								break;
+							case "report":
+								this.getReport();
+								break;
+							case "statistics":
+								this.getStatistics();
+								break;
+							default:
+								break;
+						}
+						this.oldId = this.newId;
+					}
+				},
+				"changeId" : function(id){
+					this.newId = id;
+					this.fill();
+				},
+				"getComment" : function(){
+					var HTML = "<div class='empty-block'></div>";
+					$(".content").append(HTML);
+					if(this.comment==""){
+						HTML = "<div class='comment'>"+
+									"<div class='container'>"+
+										"<div class='comment-head'>"+
+											"<img src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAA1tJREFUWAntV19oUmEU372WY1NLY0QNgp7642PSgxWxlkGR9RCMPRRjY22rDXOkbhQMYkU01zYhkKiEemiQFGMooweDXqwX1yCGBfbWn4clZFNTJ7v2O5fd223oTTd1Lx0493x/zjm/8517vvt9l/F6vYoaCblcrv2ZTMaOoSZwI3gzeD2UhfE38Ova2tq7/f39H6TOGCGAcDjM+P3+qxzHDUNByTDMR8g5cFJqsIa2CjYHcrncXsgllmWHzGbzhF6vz5GvTfQg8vl8BHwNCm8RaYfVav3ET5TpMT4+viebzT5GIE5g6RDAELnmM+B0Og2YeIP+K4PBYDaZTFyZcP9yEwgE2FAoNIPsNoEPDwwMzLKkAfA7EL/q6uq6KgVOOORbqVR2AS+9glmjSCQSmmQy6cb8S5vN5iHFSpLRaFwMBoMHgXEiEolMsNFodBc6tBNmKwm8yneIMAmbXkE9TeKdfCdZDZJg1fM1UA3QQhjiNsynMDo6ug/jh/LNFRpDcXEo5hmLxbJQSEc6LhsAnN0Gn5UaFNNOpVI3oHerGF3ZALRabRt2CWWhaFpeXuYaGhreF2sgG0B3d3cCjqhiK0YbXoT/A5CtgZGRkft4+RfXWQCPBgcHLxXyIRsAvlh+bEP+3C7k4F/j5ENORzYAHJdkLOtAznkxcxtfhLgBZShSpEpTTMRl0tlCfgibVavVX6mDL5iBZJWIxyJstqenJwbQOWSgye12VzwLHo9nKy6+xwiTsIUaGMbAjng8PlHpDOAScg+L3a5QKG4Slngtx55/gv558FMcJlc6Ozt/kkK5CNnVYYF09WsBT+Lb0Ea+xW2o0+n6YrEYbfsLiPIkbsoBtIMoFDqQBJp3OBzvhM5qOTY2dhTp3S0dR59e6xHwcfA28KRGo+mD5EkMYOXka8clZApG1wHeCo1WtFdUeUH/CnmPZwTcDt2HSC8jNZC057GYy1jAC8nYnwwIg1CYRnuaCjKdTu9EIOKvGe4HXwQ9qQR4C8AfAHsB3IG5RWEe/SWVSvW5t7c3751TrAHBoFQJ8NMI8jns4iisZrvdPl+KD2EXlGIj6gK8GeDPMJDCSk+VCk6O1hwA/UUj7VPwweHdnqHfLHJYKq05AHw5G7HqH0j7OdRNsFRgQf83E+c+FllPa9MAAAAASUVORK5CYII='>"+
+											"<span>"+"</span>"+
+										"</div>"+
+									"<hr/>"+
+									"</div>"+
+								"</div>";
+						$(".content").append(HTML);
+						var url = "/competitions/getComment?competitionId=#{competition.id}";
+						$.ajax({
+							url:url,
+							type:"GET",
+							dataType:"json",
+							success:function(data){
+								var number = data.number;
+								$(".comment-head span").text("评论 "+data.number+"条");
+								for(var i=0;i<data.comments.length;i++){
+									HTML = "<div class='comment-block'>"+
+												"<img src="+data.users[i].avatorUrl+">"+
+											        "<div class='comment-info'>"+
+														"<p class='comment-user'>"+data.users[i].nickname+"</p>"+
+												        "<p class='comment-time-address'>"+data.comments[i].createdAt+" 来自["+data.campuses[i]+"]</p>"+
+												        "<p class='comment-content'>"+data.comments[i].content+"</p>"+
+												    "</div>"+
+											"</div>"+
+											"<hr/>";
+									$(".content").append(HTML);
+								}
+								this.comment = $(".content").html();
+							}
+						})
+					}else{
+						alert(this.comment);
+						$(".content").append(this.comment);
+					}
+				},
+				"setComment" : function(comment){
+					this.comment = comment;
+				},
+				"getReport" : function(){
+					if(this.report==""){
+						var url = "";
+						$.ajax({
+							url:url,
+							type:"GET",
+							dataType:"json",
+							success:function(data){
+							
+							}
+						})
+					}else{
+						$(".content").append(this.report);
+					}
+				},
+				"getStatistics" : function(){
+					if(this.statistics==""){
+						var url = "";
+						$.ajax({
+							url:url,
+							type:"GET",
+							dataType:"json",
+							success:function(data){
+							
+							}
+						})
+					}else{
+						$(".content").append(this.statistics);
+					}
+				}
+			};
+			window.onload = function(){
+				navbar.changeId("middle");
+				content.changeId("statistics");
+			}
+			function menu(order,name){
+				navbar.changeId(order);
+				content.changeId(name);
+			}
+	body
+		div.head
+			div.container
+				div.info-block
+					div.team.infoA
+						img(src="#{competition.get('teamAId').get('logoUrl')}")
+						p #{competition.get("teamAId").get("name")}
+					div.competition-info
+						p #{competition.get("state")}
+						div.score
+							p.scoreA #{competition.get("scoreA")}
+							p.character -
+							p.scoreB #{competition.get("scoreB")}
+						div.type
+							img(src="images/icon-semifinals@2x.png")
+							span #{competition.get("type")}
+					div.team.infoB
+						img(src="#{competition.get('teamBId').get('logoUrl')}")
+						p #{competition.get("teamBId").get("name")}
+		div.navbar
+			div.container
+				div.left#left(onclick="menu('left','comment')")
+					img(src="images/icon-comments.png")
+					span 评论
+				div.middle#middle(onclick="menu('middle','statistics')")
+					img(src="images/icon-statics@2x.png")
+					span 统计
+				div.right#right(onclick="menu('right','report')")
+					img(src="images/icon-report.png")
+					span 战报
+		div.content
+			div.statistics
+				div.full-block
+					p 得分统计
+		div.bottom-block
+			input(type="text")
+			button.right 发送

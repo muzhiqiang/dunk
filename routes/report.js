@@ -1,26 +1,53 @@
 var express = require('express');
 var router = express.Router();
 var AV = require('../avos.js');
-AV.initialize('rERfeCb5UDfcONYQykxCIkKM', 'hyG3cmbmPhAhOcQ1fwVWSyk0');
 var Report = AV.Object.extend("Report");
 var ReportComment = AV.Object.extend("ReportComment");
 var ReportLike = AV.Object.extend("ReportLike");
+var User = AV.Object.extend("_User");
 
 /*  获取战报  */
-router.get("/getReport",function(req,res,next){
-	var reportId = req.query.reportId;
+router.get("/:reportId",function(req,res,next){
+	var reportId = req.params.reportId;
+	if(reportId=="getComment"||reportId=="isReportLike"){
+		next();
+	}
 	var query = new AV.Query(Report);
 	query.equalTo("objectId",reportId);
 	query.find({
 		success:function(reports){
-			var time = new Date(reports[0].createdAt);
-			var year = time.getFullYear();
-			var month = time.getMonth()+1;
-			month = month<10?"0"+month:month;
-			var day = time.getDate();
-			day = day<10?"0"+day:day;
-			reports[0].createdAt = year+"-"+month+"-"+day;
-			res.render("report",{report:reports[0],reportId:reportId});
+			if(reports.length>0){
+				var time = new Date(reports[0].createdAt);
+				var year = time.getFullYear();
+				var month = time.getMonth()+1;
+				month = month<10?"0"+month:month;
+				var day = time.getDate();
+				day = day<10?"0"+day:day;
+				reports[0].createdAt = year+"-"+month+"-"+day;
+				res.render("report",{report:reports[0],reportId:reportId});
+			}
+			
+		},
+		error:function(object,error){
+			console.log(error);
+		}
+	})
+})
+
+router.get("/isReportLike",function(req,res,next){
+	var userId = req.query.userId;
+	var reportId = req.query.reportId;
+	var report = new Report();
+	report.id = reportId;
+	var user = new User();
+	user.id = userId;
+	var query = new AV.Query(ReportLike);
+	query.equalTo("userId",user);
+	query.equalTo("reportId",report);
+	query.find({
+		success:function(reportLike){
+			res.json({number:reportLike.length});
+			res.end();
 		},
 		error:function(object,error){
 			console.log(error);
@@ -43,14 +70,26 @@ router.get("/getComment",function(req,res,next){
 			query.equalTo("reportId",report);
 			query.count({
 				success:function(count){
-					var users = new Array();
-					var campuses = new Array();
-					for(var i=0;i<comments.length;i++){
-						users[i] = comments[i].get("userId");
-						campuses[i] = comments[i].get("userId").get("campusId").get("name");
-						comments[i].createdAt = format_date(comments[i].createdAt);
-					}
-					res.json({number:comments.length,comments:comments,reportLike:count,users:users,campuses:campuses});
+					console.log(count);
+					var query = new AV.Query(ReportComment);
+					query.equalTo("reportId",report);
+					query.count({
+						success:function(number){
+							console.log(number);
+							var users = new Array();
+							var campuses = new Array();
+							for(var i=0;i<comments.length;i++){
+								users[i] = comments[i].get("userId");
+								campuses[i] = comments[i].get("userId").get("campusId").get("name");
+								comments[i].updatedAt = format_date(comments[i].createdAt);
+							}
+							res.json({number:number,comments:comments,reportLike:count,users:users,campuses:campuses});
+						},
+						error:function(object,error){
+							console.log(error);
+						}
+					})
+					
 				}
 			})
 			
@@ -60,6 +99,8 @@ router.get("/getComment",function(req,res,next){
 		}
 	})
 })
+
+
 
 function format_date(date){
 	var date = new Date(date);

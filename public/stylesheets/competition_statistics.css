@@ -1,0 +1,10 @@
+.full-block{
+	width: 100%;
+	height: 31.5px;
+	background-color : #EEEEEE;
+	text-align: center;
+}
+.full-block p{
+	color: #333333;
+	line-height: 31.5px;
+}
