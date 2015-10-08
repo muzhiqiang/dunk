@@ -14,7 +14,7 @@ html(lang="zh-cn")
 			var weixin = {
 				"judge":function(){
 								var ua = navigator.userAgent.toLowerCase();
-								if(ua.match("/MicroMessenger/i")=="micromessenger"){
+								if(ua.match(/MicroMessenger/i) == 'micromessenger'){
 									this.is_weixin = true;
 								}else{
 									this.is_weixin = false;
@@ -54,7 +54,7 @@ html(lang="zh-cn")
 						$("#normal").attr("hidden",false);
 						$("#active").attr("hidden",true);
 						if(parseInt($(".btn.left span").text())>0){
-							$(".btn.left.span").text(parseInt($(".btn.left span").text()-1));
+							$(".btn.left.span").text(parseInt($(".btn.left span").text())-1);
 						}
 					}
 				}
@@ -120,8 +120,9 @@ html(lang="zh-cn")
 			
 			
 			function reportLike(){
+				alert(weixin.is_weixin);
 				if(weixin.is_weixin){
-					location.href = "http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/qing-tian-bi-zhi/id915661899";
+					location.href = "http://mp.weixin.qq.com/mp/redirect?url=http://dianhua.qq.com/";
 				}else if(judge){
 					window.webkit.messageHandlers.Dunk.postMessage("toggleLike");
 				}else{
@@ -131,7 +132,7 @@ html(lang="zh-cn")
 			};
 			function comment(){
 				if(weixin.is_weixin){
-					location.href = "http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/qing-tian-bi-zhi/id915661899"
+					location.href = "http://mp.weixin.qq.com/mp/redirect?url=http://dianhua.qq.com/"
 				}else if(judge){
 					window.webkit.messageHandlers.Dunk.postMessage("createComment");
 				}else{

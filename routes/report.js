@@ -14,8 +14,10 @@ router.get("/:reportId",function(req,res,next){
 	}
 	var query = new AV.Query(Report);
 	query.equalTo("objectId",reportId);
+	console.log(query);
 	query.find({
 		success:function(reports){
+			console.log(reports.length);
 			if(reports.length>0){
 				var time = new Date(reports[0].createdAt);
 				var year = time.getFullYear();
