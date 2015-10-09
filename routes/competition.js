@@ -8,13 +8,18 @@ router.get('/:competitionId',function(req,res,next){
 	var competitionId = req.params.competitionId;
 	if(competitionId=="getComment"){
 		next();
+		return;
 	}
 	var query = new AV.Query(Competition);
 	query.equalTo("objectId",competitionId);
 	query.include("teamAId");
 	query.include("teamBId");
+	query.include("reportId");
 	query.find({
 		success:function(competition){
+			if(competition[0].get('reportId')){
+				competition[0].get('reportId').set('time',format_date(competition[0].get('reportId').get('time')))
+			}
 			res.render("competition",{competition:competition[0]});
 		},
 		error:function(object,error){
@@ -29,7 +34,7 @@ router.get("/getComment",function(req,res,next){
 	competition.id = competitionId;
 	query.equalTo("competitionId",competition);
 	query.include("userId");
-	query.include("userid.campusId");
+	query.include("userId.campusId");
 	query.limit(20);
 	query.find({
 		success:function(comments){
@@ -45,6 +50,7 @@ router.get("/getComment",function(req,res,next){
 						comments[i].updatedAt = format_date(comments[i].createdAt);
 					}
 					res.json({number:count,comments:comments,users:users,campuses:campuses});
+					res.end();
 				}
 			})
 		},
@@ -53,7 +59,6 @@ router.get("/getComment",function(req,res,next){
 		}
 	})
 })
-
 function format_date(date){
 	var date = new Date(date);
 	var year = date.getFullYear();

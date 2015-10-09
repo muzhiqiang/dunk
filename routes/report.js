@@ -11,6 +11,7 @@ router.get("/:reportId",function(req,res,next){
 	var reportId = req.params.reportId;
 	if(reportId=="getComment"||reportId=="isReportLike"){
 		next();
+		return;
 	}
 	var query = new AV.Query(Report);
 	query.equalTo("objectId",reportId);

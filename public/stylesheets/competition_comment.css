@@ -1,12 +1,13 @@
 .comment{
 	width: 100%;
+	background-color: #FFFFFF;
 	
 }
-.comment .container{
+.content .container{
 	margin-left: 10px;
 	margin-right: 10px;
 }
-.comment hr{
+.content hr{
 	border-bottom: 1px solid #d8d8d8;
 	margin-left: -10px;
 	margin-right: -10px;
@@ -28,6 +29,9 @@
 	line-height: 32px;
 	display: inline-block;
 	vertical-align: top
+}
+.comment-block{
+	background-color: #FFFFFF;
 }
 .comment-block img{
 	width: 50px;
