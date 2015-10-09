@@ -3,7 +3,7 @@ html
 	head
 		title 金秋杯
 		meta(charset="UTF-8")
-		meta(name="viewport" content="width=device-width, initial-scale=0.5, maximum-scale=0.5, user-scalable=no")
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
 		link(rel="stylesheet" href="/stylesheets/competition_main.css")
 		link(rel="stylesheet" href="/stylesheets/competition_comment.css")
 		link(rel="stylesheet" href="/stylesheets/competition_statistics.css")
@@ -36,12 +36,15 @@ html
 					if(this.newId != this.oldId){
 						switch(this.newId){
 							case "comment":
+								$(".bottom-block").removeClass("hide");
 								this.getComment();
 								break;
 							case "report":
+								$(".bottom-block").addClass("hide");
 								this.getReport();
 								break;
 							case "statistics":
+								$(".bottom-block").addClass("hide");
 								this.getStatistics();
 								break;
 							default:
@@ -80,23 +83,25 @@ html
 								var number = data.number;
 								$(".comment-head span").text("评论 "+data.number+"条");
 								for(var i=0;i<data.comments.length;i++){
+									var avatorUrl = data.users[i].avatorUrl;
+									if(avatorUrl==""){
+										avatorUrl = "/images/logo-360-grey@2x.png";
+									}
 									HTML = "<div class='comment-block'>"+
 												"<div class='container'>"+
 													"<img src="+data.users[i].avatorUrl+">"+
 											        "<div class='comment-info'>"+
 														"<p class='comment-user'>"+data.users[i].nickname+"</p>"+
-												        "<p class='comment-time-address'>"+data.comments[i].createdAt+" 来自["+data.campuses[i]+"]</p>"+
+												        "<p class='comment-time-address'>"+data.comments[i].updatedAt+" 来自["+data.campuses[i]+"]</p>"+
 												        "<p class='comment-content'>"+data.comments[i].content+"</p>"+
 												    "</div>"+
 												"</div>"+
 											"</div>"+
 											"<hr/>";
 									$(".content").append(HTML);
-
 								}
 								comment = $(".content").html();
 							}
-
 						})
 						
 					}else{
@@ -106,18 +111,19 @@ html
 				"getReport" : function(){
 					if(this.report==""){
 						if("{#competition.get('reportId')}"!=""){
+							var coverUrl = "#{competition.get('reportId').get('coverUrl')}"==""?"/images/logo-360-grey@2x.png":"#{competition.get('reportId').get('coverUrl')}";
 							var HTML = "<div class='empty-block'></div>"+
 										"<div class='report-block'>"+
-											"<img class='report-coverUrl' src=#{competition.get('reportId').get('coverUrl')}>"+
+											"<img class='report-coverUrl' src="+coverUrl+">"+
 											"<div class='report-text'>"+
 												"<p>#{competition.get('reportId').get('title')}</p>"+
 												"<div class='report-info'>"+
 													"<div class='report-time'>"+
-														"<img src=''>"+
+														"<img src='/images/icon-clock@2x.png'>"+
 														"<span>#{competition.get('reportId').get('time')}</span>"+
 													"</div>"+
 													"<div class='report-author'>"+
-														"<img src=''>"+
+														"<img src='/images/icon-author@2x.png'>"+
 														"<span>#{competition.get('reportId').get('author')}</span>"+
 													"</div>"+
 												"</div>"+
@@ -132,7 +138,6 @@ html
 					}
 				},
 				"getStatistics" : function(){
-					$(".bottom-block").remove();
 					if(this.statistics==""){
 						var temp = "#{competition.get('statistics')}";
 						if(temp!=""){
@@ -197,15 +202,14 @@ html
 				}
 			};
 			window.onload = function(){
-				navbar.changeId("right");
-				content.changeId("report");
+				menu("left","comment");
 			}
 			function menu(order,name){
 				navbar.changeId(order);
 				content.changeId(name);
 			}
 	body
-		div.head
+		div.head(style="background-image:url(#{competition.get('gameId').get('coverUrl')});")
 			div.container
 				div.info-block
 					div.team.infoA
@@ -224,17 +228,16 @@ html
 						img(src="#{competition.get('teamBId').get('logoUrl')}")
 						p #{competition.get("teamBId").get("name")}
 		div.navbar
-			div.container
-				div.left#left(onclick="menu('left','comment')")
-					img(src="/images/icon-comments.png")
-					span 评论
-				div.middle#middle(onclick="menu('middle','statistics')")
-					img(src="/images/icon-statics@2x.png")
-					span 统计
-				div.right#right(onclick="menu('right','report')")
-					img(src="/images/icon-report.png")
-					span 战报
+			div.left#left(onclick="menu('left','comment')")
+				img(src="/images/icon-comments.png")
+				span 评论
+			div.middle#middle(onclick="menu('middle','statistics')")
+				img(src="/images/icon-statics@2x.png")
+				span 统计
+			div.right#right(onclick="menu('right','report')")
+				img(src="/images/icon-report.png")
+				span 战报
 		div.content
-		div.bottom-block
+		div.bottom-block.hide
 			input(type="text")
 			button.right 发送

@@ -15,6 +15,7 @@ router.get('/:competitionId',function(req,res,next){
 	query.include("teamAId");
 	query.include("teamBId");
 	query.include("reportId");
+	query.include("gameId");
 	query.find({
 		success:function(competition){
 			if(competition[0].get('reportId')){
@@ -58,7 +59,7 @@ router.get("/getComment",function(req,res,next){
 			console.log(error);
 		}
 	})
-})
+});
 function format_date(date){
 	var date = new Date(date);
 	var year = date.getFullYear();
