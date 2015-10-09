@@ -142,7 +142,7 @@ html(lang="zh-cn")
 		div.report
 			h1.title #{report.get("title")}
 			div.info
-				span.span-time #{report.createdAt}
+				span.span-time #{report.get("time")}
 				span.span-author #{report.get("author")}
 				span.span-read 阅读 #{report.get("views")}
 			hr
