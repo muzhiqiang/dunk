@@ -19,10 +19,13 @@ router.get('/:competitionId',function(req,res,next){
 	query.include("gameId");
 	query.find({
 		success:function(competition){
-			if(competition[0].get('reportId')){
-				competition[0].get('reportId').set('time',dateUtil.format_date(competition[0].get('reportId').get('time')))
+			if(competition.length>0){
+				if(competition[0].get('reportId')){
+					competition[0].get('reportId').set('time',dateUtil.format_date(competition[0].get('reportId').get('time')))
+				}
+				res.render("competition",{competition:competition[0]});
 			}
-			res.render("competition",{competition:competition[0]});
+			
 		},
 		error:function(object,error){
 			console.log(error);
