@@ -9,6 +9,7 @@ html
 		link(rel="stylesheet" href="/stylesheets/competition_report.css")
 		link(rel="stylesheet" href="/stylesheets/game_team.css")
 		link(rel="stylesheet" href="/stylesheets/game_competition.css")
+		link(rel="icon", href="/images/favicon.png", type="image/png")
 		script(src="/javascripts/jquery.min.js")
 		script(src="/javascripts/stackBlur.js")
 		script(src="/javascripts/fastclick.js")
@@ -65,6 +66,15 @@ html
 					location.href = "/"+type+"/"+id;
 				}
 			}
+			function toAppStore(){
+				if(weixin.is_weixin){
+					location.href = "http://mp.weixin.qq.com/mp/redirect?url=http://dianhua.qq.com/";
+					return false;
+				}else{
+					location.href = "https://itunes.apple.com/cn/app/qing-tian-bi-zhi/id915661899";
+					return false;
+				}
+			}
 
 	body
 		img#blur.hide(src="#{game.get('coverUrl')}")
@@ -74,7 +84,7 @@ html
 		div.head
 			p.type #{game.get("name")}
 			p.college #{game.get("college")}
-			div.like
+			div.like(onclick="toAppStore()")
 				p 关注
 		div.navbar
 			button.button-block(onclick="changeContent('left','left_content')")
