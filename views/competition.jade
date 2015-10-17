@@ -99,10 +99,10 @@ html
 					})
 				},
 				"getReport" : function(){
-					if("{#competition.get('reportId')}"!=""){
+					if("#{competition.get('reportId')}"!=""){
 						var coverUrl = "#{competition.get('reportId').get('coverUrl')}"==""?"/images/logo-360-grey@2x.png":"#{competition.get('reportId').get('coverUrl')}";
 						var HTML = "<div class='empty-block'></div>"+
-									"<div class='report-block'>"+
+									"<div class='report-block' onclick=skip(\"#{competition.get('reportId').id}\")>"+
 										"<img class='report-coverUrl' src="+coverUrl+">"+
 										"<div class='report-text'>"+
 											"<p>#{competition.get('reportId').get('title')}</p>"+
@@ -212,6 +212,13 @@ html
 					return false;
 				}
 			}
+			function skip(id){
+				if(is_weixin()){
+					location.href = "http://mp.weixin.qq.com/mp/redirect?url=http://dangke.co/reports/"+id;
+				}else{
+					location.href = "/reports/"+id;
+				}
+			}
 	body
 		img#blur.hide(src="#{competition.get('gameId').get('coverUrl')}")
 		canvas.hide#canvas
@@ -249,9 +256,9 @@ html
 				div.middle#middle(style="background-image:url('/images/btn-statistics@2x.png')")
 			button.button-block(onclick="menu('right','report')")
 				div.right#right(style="background-image:url('/images/btn-report@2x.png')")
-		div.content#right_content.hide
 		div.content#left_content.hide
 		div.content#middle_content.hide
+		div.content#right_content.hide
 		div.bottom-block.hide(onclick="return toAppStore()")
 			input(type="text" disabled)
 			button.right 发送

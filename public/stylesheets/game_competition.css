@@ -1,0 +1,96 @@
+.type-block{
+	width: 100%;
+	height: 36px;
+}
+.type-block p{
+	font-size: 14px;
+	color: #333333;
+	display: block;
+	margin-left: 12px;
+	line-height: 36px;
+}
+.competition-block{
+	width: 100%;
+	height: 120px;
+	background-color: #FFFFFF;
+	box-shadow: inset 0px -1px 1px 0px rgba(0,0,0,0.05);
+	cursor: pointer;
+}
+.container{
+	width: 100%;
+	height: 100%;
+}
+.container div{
+	display: inline-block;
+	vertical-align: top;
+}
+.competition-info{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+.teamA{
+	position: absolute;
+	left: 20px;
+}
+.teamB{
+	position: absolute;
+	right: 20px;
+}
+.teamA p{
+	position: relative;
+	top: 8px;
+	font-size: 13px;
+	color: #333333;
+	text-align: center;
+}
+.teamB p{
+	position: relative;
+	top: 8px;
+	font-size: 13px;
+	color: #333333;
+	text-align: center;
+}
+.competition-block img{
+	width: 70px;
+	height: 70px;
+	border: solid 1px #D8D8D8;
+	border-radius: 100%;
+	display: block;
+	margin-top: 12px;
+}
+.type-name{
+	display: block;
+	margin-top: 16px;
+	font-size: 13px;
+	color: #333333;
+	text-align: center;
+}
+.score{
+	display: block;
+	margin-top: 5.5px;
+	width: 100%;
+	height: 36px;
+	margin-left: auto;
+	margin-right: auto;
+	font-family: Avenir-Light;
+	font-size: 30px;
+	color: #333333;
+	text-align: center;
+	line-height: 36px;
+}
+.competition-block button{
+	display: block;
+	margin-top: 7px;
+	width: 80px;
+	height: 25px;
+	margin-left: auto;
+	margin-right: auto;
+	outline: none;
+	border-radius: 25px;
+	background-color: #EEEEEE;
+	background-repeat: no-repeat;
+	background-size: cover;
+	-webkit-background-size:cover;
+	-moz-background-size: cover;
+}

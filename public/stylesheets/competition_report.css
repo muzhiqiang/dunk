@@ -2,6 +2,8 @@
 	width: 100%;
 	height: 90px;
 	background-color: #ffffff;
+	border-bottom: solid 1px #D8D8D8;
+	cursor:pointer;
 }
 .report-coverUrl{
 	display: inline-block;

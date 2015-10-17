@@ -1,0 +1,57 @@
+doctype html
+html(lang="zh-cn")
+	head
+		meta(charset="utf-8")
+		meta(http-equiv="X-UA-Compatible", content="IE=edge,chrome=1")
+		title 当刻|一款校园体育 APP
+		meta(name="description", content="当刻|一款校园体育 APP")
+		meta(name="keywords", content="当刻,校园,应用,体育,篮球,DUNK,App,iOS,Android")
+		meta(name="renderer", content="webkit")
+		meta(name="author", content="WlliTeam")
+		meta(name="apple-itunes-app", content="app-id=915661899")
+		meta(name="baidu-site-verification", content="##")
+		meta(name="google-site-verification", content="##")
+		meta(name="viewport", content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+		link(rel="stylesheet", href="css/app.css")
+		link(rel="icon", href="./images/favicon.png", type="image/png")
+	body
+		div#container
+			div#header
+				div#logo
+				p 当刻，一款校园体育 APP
+			div#buttons
+				a#ios(target="_blank")
+				a#android
+			img#qrcode(width=140, src="./images/qrcode.jpg")
+			a#mbtn(href="")
+			i#ibtt
+				| Copyright © 
+				a(href="http://wili.us", target=_blank) 唯厘科技
+				|  2015 All Right Reserved · 
+				a(href="mailto:stone@wili.us") 联系我们 · 
+				a(href="dunk_privacy.html", target=_blank) 隐私声明
+	div#phone
+	script(type="text/javascript").
+		// Android
+		function isAndroid () {
+			var ua = navigator.userAgent.toLowerCase();
+			var result = ua.indexOf("android") > -1;
+			return result;
+		}
+
+		if (isAndroid()) {
+			document.querySelector("#mbtn").href = "";
+		}
+
+		function is_weixin() {
+			var ua = navigator.userAgent.toLowerCase();
+			if(ua.match(/MicroMessenger/i) == "micromessenger") {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		if (is_weixin()) {
+			document.querySelector("#mbtn").href = "";
+		}

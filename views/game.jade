@@ -1,0 +1,130 @@
+doctype html
+html
+	head
+		title
+		meta(charset="UTF-8")
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+		link(rel="stylesheet" href="/stylesheets/normalize.css")
+		link(rel="stylesheet" href="/stylesheets/game_main.css")
+		link(rel="stylesheet" href="/stylesheets/competition_report.css")
+		link(rel="stylesheet" href="/stylesheets/game_team.css")
+		link(rel="stylesheet" href="/stylesheets/game_competition.css")
+		script(src="/javascripts/jquery.min.js")
+		script(src="/javascripts/stackBlur.js")
+		script(src="/javascripts/fastclick.js")
+		script(type="text/javascript").
+			var menu = {
+				"oldId":"left",
+				"newId":"",
+				"changeId":function(id){
+					this.newId = id;
+					if(this.newId!=this.oldId){
+						$("#"+this.oldId).removeClass("active");
+						$("#"+this.newId).addClass("active");
+						this.oldId = this.newId;
+					}
+				}
+			}
+			var content = {
+				"oldId":"team_content",
+				"newId":"",
+				"changeId":function(id){
+					this.newId = id;
+					if(this.newId!=this.oldId){
+						$("#"+this.oldId).addClass("hide");
+						$("#"+this.newId).removeClass("hide");
+						this.oldId = this.newId;
+					}
+				}
+			}
+			var weixin = {
+				"judge":function(){
+								var ua = navigator.userAgent.toLowerCase();
+								if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+									this.is_weixin = true;
+								}else{
+									this.is_weixin = false;
+								}
+							},
+				"is_weixin": false
+			}
+			weixin.judge();
+			window.onload = function(){
+				FastClick.attach(document.body);
+				stackBlurImage("blur","canvas",40,false);
+
+			}
+			function changeContent(mid,cid){
+				menu.changeId(mid);
+				content.changeId(cid);
+			}
+			function skip(id,type){
+				if(weixin.is_weixin){
+					location.href = "http://mp.weixin.qq.com/mp/redirect?url=http://dangke.co/"+type+"/"+id;
+				}else{
+					location.href = "/"+type+"/"+id;
+				}
+			}
+
+	body
+		img#blur.hide(src="#{game.get('coverUrl')}")
+		canvas.hide#canvas
+		div#backgroundImg.backgroundImg
+		div.head
+			p.type #{game.get("name")}
+			p.college #{game.get("college")}
+			div.like
+				p 关注
+		div.navbar
+			button.button-block(onclick="changeContent('left','left_content')")
+				div.left.active#left(style="background-image:url('/images/btn-teams@2x.png')")
+			button.button-block(onclick="changeContent('middle','middle_content')")
+				div.middle#middle(style="background-image:url('/images/btn-progress@2x.png')")
+			button.button-block(onclick="changeContent('right','right_content')")
+				div.right#right(style="background-image:url('/images/btn-report@2x.png')")
+		div.content#left_content
+			div.empty-block
+			-each val,key in teams
+				div.team-block
+					img.team-img(src=val.get("logoUrl"))
+					p.team-name #{val.get("name")}
+		div.content.hide#middle_content
+			-var type=""
+			-each val,key in competitions
+				-if(type!=val.get("type"))
+					div.type-block
+						p #{val.get("type")}
+					-type=val.get("type")
+				div.competition-block(onclick="skip('#{val.id}','competitions')")
+					div.container
+						div.teamA
+							img(src="#{val.get('teamAId').get('logoUrl')}")
+							p #{val.get("teamAId").get("name")}
+						div.competition-info
+							p.type-name #{game.get("name")}
+							p.score #{val.get("scoreA")} - #{val.get("scoreB")}
+							- if(val.get("type")=="小组赛")
+								button(style="background-image:url(/images/stage-group@2x.png)")
+							- else if(val.get("type")=="淘汰赛")
+								button(style="background-image:url(/images/stage-kichout@2x.png)")
+							- else if(val.get("type")=="总决赛")
+								button(style="background-image:url(/images/stage-final@2x.png)")
+							- else if(val.get("type")=="半决赛")
+								button(style="background-image:url(/images/stage-half@2x.png)")
+						div.teamB
+							img(src="#{val.get('teamBId').get('logoUrl')}")
+							p #{val.get('teamBId').get('name')}
+		div.content.hide#right_content
+			div.empty-block
+			-each val,key in reports
+				div.report-block(onclick="skip('#{val.id}','reports')")
+					img.report-coverUrl(src=val.get('coverUrl'))
+					div.report-text
+						p #{val.get('title')}
+						div.report-info
+							div.report-time
+								img(src="/images/icon-clock@2x.png")
+								span #{val.get("time")}
+							div.report-author
+								img(src="/images/icon-author@2x.png")
+								span #{val.get("author")}
