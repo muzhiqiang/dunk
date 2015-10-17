@@ -1,0 +1,227 @@
+/* Table of Content
+==================================================
+	#Base Correction
+	#Site Styles
+	#Page Styles
+	#Media Queries
+	#Font-Face */
+/* #Base Correction
+================================================== */
+/* #Site Styles
+================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box; }
+
+html {
+  width: 100%;
+  min-height: 100%; }
+
+body {
+  font: 400 16px/1.5 'Microsoft YaHei', 'Helvetica Neue', Helvetica, 'Hiragino Sans GB', STHeiti, 'WenQuanYi Micro Hei', simhei;
+  -webkit-font-smoothing: subpixel-antialiased;
+  min-height: 100%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-image: url(/images/background.jpg);
+  background-size: cover; }
+
+::-moz-selection {
+  background: transparent; }
+
+::selection {
+  background: transparent; }
+
+#phone {
+  width: 320px;
+  height: 600px;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  -moz-border-radius: 40px;
+  -webkit-border-radius: 40px;
+  border-radius: 40px;
+  background-image: url(/images/iphone6@2x.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin-top: -300px; }
+
+@-moz-keyframes spin {
+  from {
+    -moz-transform: rotate(0deg); }
+  to {
+    -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
+@keyframes spin {
+  from {
+    transform: rotate(0deg); }
+  to {
+    transform: rotate(360deg); } }
+#container {
+  width: 300px;
+  height: 600px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  text-align: center;
+  margin-top: -300px; }
+  #container #logo {
+    width: 174px;
+    height: 60px;
+    position: relative;
+    margin: 0 auto;
+    background-image: url("../images/logo@2x.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: center;
+    margin-top: 50px;
+    cursor: text;
+    text-align: left; }
+    #container #logo img {
+      -webkit-animation: spin 6s linear infinite;
+      -moz-animation: spin 6s linear infinite;
+      animation: spin 6s linear infinite; }
+  #container p {
+    margin-top: 26px;
+    margin-bottom: 64px;
+    padding-left: 20px;
+    color: #000;
+    font-size: 16px;
+    line-height: 14px;
+    letter-spacing: 1px; }
+  #container #buttons a {
+    width: 200px;
+    height: 60px;
+    display: block;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    margin: 20px auto;
+    text-decoration: none;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s; }
+    #container #buttons a:hover {
+      -moz-transform: scale(1.05, 1.05);
+      -ms-transform: scale(1.05, 1.05);
+      -webkit-transform: scale(1.05, 1.05);
+      transform: scale(1.05, 1.05);
+      -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px; }
+  #container #ios {
+    background-image: url("../images/ios_btn@2x.png"); }
+  #container #android {
+    background-image: url("../images/android_btn@2x.png"); }
+  #container #qrcode {
+    position: relative;
+    margin: 50px auto;
+    cursor: pointer;
+    border-radius: 5px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+    -moz-transition-property: all;
+    -o-transition-property: all;
+    -webkit-transition-property: all;
+    transition-property: all;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s; }
+    #container #qrcode:hover {
+      -moz-transform: scale(1.05, 1.05);
+      -ms-transform: scale(1.05, 1.05);
+      -webkit-transform: scale(1.05, 1.05);
+      transform: scale(1.05, 1.05);
+      -moz-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px;
+      box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 10px; }
+  #container #mbtn {
+    display: none;
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+    background-image: url("../images/mbtn@2x.png");
+    background-repeat: no-repeat;
+    background-size: 190px 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    background-position: center; }
+
+#ibtt {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  width: 500px;
+  height: 20px;
+  color: #ababab;
+  font-size: 14px;
+  padding: 5px 10px;
+  text-align: center;
+  margin-left: -250px; }
+  #ibtt a {
+    color: inherit;
+    text-decoration: none; }
+    #ibtt a:hover {
+      color: #333333; }
+
+/* #Page Styles
+================================================== */
+/* #Media Queries
+================================================== */
+@media (max-width: 568px) {
+  #buttons {
+    display: none !important; }
+
+  #mbtn {
+    display: block !important; }
+
+  #phone {
+    margin-right: -160px;
+    margin-top: 0;
+    top: 140px;
+    height: 700px; }
+
+  #container {
+    height: 100%;
+    margin-left: -160px;
+    margin-top: 0;
+    top: 0; }
+    #container #logo {
+      margin-top: 10px; }
+    #container p {
+      font-size: 14px; }
+    #container #slogan {
+      margin-bottom: 0; }
+    #container #qrcode {
+      display: none; }
+    #container #ibtt {
+      position: absolute;
+      text-align: center;
+      top: 740px;
+      font-size: 11px;
+      margin: 0;
+      width: 100%;
+      left: 0;
+      padding: 0;
+      line-height: 20px; } }
