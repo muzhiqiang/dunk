@@ -23,6 +23,7 @@ router.get('/:competitionId',function(req,res,next){
 				if(competition[0].get('reportId')){
 					competition[0].get('reportId').set('time',dateUtil.format_date(competition[0].get('reportId').get('time')))
 				}
+				console.log(competition[0].get("reportId"))
 				res.render("competition",{competition:competition[0]});
 			}
 			

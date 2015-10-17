@@ -1,7 +1,7 @@
 doctype html
 html
 	head
-		title
+		title 当刻
 		meta(charset="UTF-8")
 		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
 		link(rel="stylesheet" href="/stylesheets/normalize.css")
@@ -70,6 +70,7 @@ html
 		img#blur.hide(src="#{game.get('coverUrl')}")
 		canvas.hide#canvas
 		div#backgroundImg.backgroundImg
+		div.colorBackground
 		div.head
 			p.type #{game.get("name")}
 			p.college #{game.get("college")}

@@ -98,30 +98,6 @@ html
 						}
 					})
 				},
-				"getReport" : function(){
-					if("#{competition.get('reportId')}"!=""){
-						var coverUrl = "#{competition.get('reportId').get('coverUrl')}"==""?"/images/logo-360-grey@2x.png":"#{competition.get('reportId').get('coverUrl')}";
-						var HTML = "<div class='empty-block'></div>"+
-									"<div class='report-block' onclick=skip(\"#{competition.get('reportId').id}\")>"+
-										"<img class='report-coverUrl' src="+coverUrl+">"+
-										"<div class='report-text'>"+
-											"<p>#{competition.get('reportId').get('title')}</p>"+
-											"<div class='report-info'>"+
-												"<div class='report-time'>"+
-													"<img src='/images/icon-clock@2x.png'>"+
-													"<span>#{competition.get('reportId').get('time')}</span>"+
-												"</div>"+
-												"<div class='report-author'>"+
-													"<img src='/images/icon-author@2x.png'>"+
-													"<span>#{competition.get('reportId').get('author')}</span>"+
-												"</div>"+
-											"</div>"+
-										"</div>"+
-									"</div>";
-						$("#right_content").append(HTML);
-						
-					}
-				},
 				"getStatistics" : function(){
 					var temp = "#{competition.get('statistics')}";
 					if(temp!=""){
@@ -188,7 +164,6 @@ html
 				
 				content.getComment();
 				content.getStatistics();
-				content.getReport();
 				menu("left","comment");
 			}
 			function menu(order,name){
@@ -222,6 +197,7 @@ html
 	body
 		img#blur.hide(src="#{competition.get('gameId').get('coverUrl')}")
 		canvas.hide#canvas
+		div.colorBackground
 		div#backgroundImg.backgroundImg
 		div.head
 			div.container
@@ -259,6 +235,19 @@ html
 		div.content#left_content.hide
 		div.content#middle_content.hide
 		div.content#right_content.hide
+			-if(competition.get("reportId"))
+				div.empty-block
+				div.report-block(onclick="skip('#{competition.get('reportId').id}')")
+					img.report-coverUrl(src="#{competition.get('reportId').get('coverUrl')}")
+					div.report-text
+						p #{competition.get('reportId').get('title')}
+						div.report-info
+							div.report-time
+								img(src="/images/icon-clock@2x.png")
+								span #{competition.get('reportId').get('time')}
+							div.report-author
+								img(src="/images/icon-author@2x.png")
+								span #{competition.get('reportId').get('author')}
 		div.bottom-block.hide(onclick="return toAppStore()")
 			input(type="text" disabled)
 			button.right 发送
