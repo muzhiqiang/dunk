@@ -112,7 +112,10 @@ html
 							img(src="#{val.get('teamAId').get('logoUrl')}")
 							p #{val.get("teamAId").get("name")}
 						div.competition-info
-							p.type-name #{game.get("name")}
+							-if(val.get("isFinished"))
+								p.type-name 已结束
+							-else
+								p.type-name 未开始
 							p.score #{val.get("scoreA")} - #{val.get("scoreB")}
 							- if(val.get("type")=="小组赛")
 								button(style="background-image:url(/images/stage-group@2x.png)")
