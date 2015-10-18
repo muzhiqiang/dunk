@@ -129,7 +129,10 @@ html
 			div.empty-block
 			-each val,key in reports
 				div.report-block(onclick="skip('#{val.id}','reports')")
-					img.report-coverUrl(src=val.get('coverUrl'))
+					-if(val.get('coverUrl'))
+						img.report-coverUrl(src="#{val.get('coverUrl')}")
+					-else
+						img.report-coverUrl(src="/images/logo-360-grey@2x.png")
 					div.report-text
 						p #{val.get('title')}
 						div.report-info

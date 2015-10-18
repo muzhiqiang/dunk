@@ -239,7 +239,10 @@ html
 			-if(competition.get("reportId"))
 				div.empty-block
 				div.report-block(onclick="skip('#{competition.get('reportId').id}')")
-					img.report-coverUrl(src="#{competition.get('reportId').get('coverUrl')}")
+					-if(competition.get('reportId').get('coverUrl'))
+						img.report-coverUrl(src="#{competition.get('reportId').get('coverUrl')}")
+					-else
+						img.report-coverUrl(src="/images/logo-360-grey@2x.png")
 					div.report-text
 						p #{competition.get('reportId').get('title')}
 						div.report-info
